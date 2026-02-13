@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<!-- Head -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diego García Ceron | Portafolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Styles -->
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; transition: background-color 0.3s; }
+        
+        /* Header y perfil */
+        .profile-header-bg {
+            height: 300px;
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/banner.webp'); 
+            background-size: cover; background-position: center 30%; background-repeat: no-repeat;
+        }
+        .profile-card { 
+            background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-top: -80px; overflow: hidden; border: none;
+        }
+        .profile-body { padding: 40px; }
+        .img-profile { 
+            border: 6px solid #28a745; width: 180px; height: 180px; 
+            object-fit: cover; background: white;
+        }
+
+        
+        /* Seccion titulos */
+        .section-title {
+            font-weight: 700; color: #212529; margin-bottom: 35px;
+            text-transform: uppercase; letter-spacing: 1px; position: relative;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 50px; height: 3px;
+            background: #28a745; margin: 10px auto;
+        }
+
+        /* Carrusel habilidades tecnicas  */
+        .carousel-item { padding: 30px; min-height: 280px; }
+        .skill-badge { 
+            font-size: 0.9rem; padding: 8px 15px; margin: 4px; 
+            background-color: #f1f3f5; color: #2c3e50; border-radius: 50px;
+            display: inline-block; border: 1px solid #dee2e6;
+        }
+
+        /* Cards Proyectos */
+        .flip-card { background-color: transparent; height: 320px; perspective: 1000px; }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer;
+        }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute; width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            border-radius: 15px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 25px;
+        }
+        .flip-card-front { background-color: #ffffff; color: black; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .flip-card-back { 
+            background-color: #28a745; color: white; transform: rotateY(180deg); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        }
+        .tech-stack-badge {
+            background: rgba(255,255,255,0.2); font-size: 0.75rem;
+            margin: 2px; padding: 5px 10px; border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+            /* Card para habilidades blandas */
+        .soft-skills-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .soft-skill-item {
+            padding: 12px 0;
+            font-size: 1.05rem;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f1f3f5;
+        }
+
+        .soft-skill-item:last-child {
+            border-bottom: none;
+        }
+
+        .soft-skill-item i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 25px; /* Alineación perfecta de los iconos */
+            text-align: center;
+        }
+
+        [data-bs-theme="dark"] .soft-skill-item {
+            color: #dee2e6;
+            border-bottom-color: #3d4246;
+        }
+
+        /* Temas responsivos */
+        .theme-switch {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            border-radius: 50%; width: 50px; height: 50px; display: flex;
+            align-items: center; justify-content: center;
+        }
+        [data-bs-theme="dark"] .profile-card, [data-bs-theme="dark"] .card, [data-bs-theme="dark"] .flip-card-front {
+            background-color: #2b3035 !important; color: #f8f9fa;
+        }
+        @media (max-width: 768px) {
+            .profile-body { padding: 20px; }
+            .img-profile { width: 150px; height: 150px; }
+            .flip-card { height: 350px; } 
+        }
+    </style>
+</head>
+
+<!-- Body -->
+<body data-bs-theme="light">
+    <!-- contendor de banner -->
+    <div class="profile-header-bg"></div>
+
+    <!-- Contenedor acerca de mi -->
+    <div class="container">
+        <div class="profile-card shadow">
+            <div class="profile-body">
+                <div class="row align-items-center text-center text-md-start">
+                    <div class="col-12 col-md-4 text-center mb-4 mb-md-0">
+                        <img src="src/fotografia_1.jpeg" class="rounded-circle img-profile shadow" alt="Diego García Ceron">
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <h1 class="display-5 fw-bold mb-1">Diego García Ceron</h1>
+                        <p class="lead text-success fw-bold mb-2">Ingeniero en Sistemas Computacionales | ESCOM-IPN</p>
+                        <p class="text-muted mb-3">
+                            Recién egresado con experiencia en <strong>análisis de datos, automatización y desarrollo de software</strong>. 
+                            Especializado en Python para soluciones de <strong>Machine Learning, Visión por Computadora e IA</strong>.
+                            <br>
+                                <br>Busco una oportunidad para potenciar mi perfil como <strong>Software Engineer, con enfoque en Data, Machine Learning o IA.</strong></p><br>
+                            </br>
+                        </p>
+                        <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-2 mt-4">
+                            <a href="src/CV_GarciaCeronDiego.pdf" download class="btn btn-success shadow-sm"><i class="bi bi-file-earmark-pdf"></i> Descargar CV</a>
+                            <a href="https://github.com/PoliticalDog" target="_blank" class="btn btn-outline-dark shadow-sm"><i class="bi bi-github"></i> GitHub</a>
+                            <a href="https://www.linkedin.com/in/diegoc1706/" target="_blank" class="btn btn-outline-primary shadow-sm"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seccion Habilidades técnicas -->
+       <div class="mt-5 pt-4">
+            <h3 class="text-center section-title">Habilidades Técnicas</h3>
+            <div id="skillsCarousel" class="carousel slide bg-white shadow-sm rounded-4" data-bs-ride="carousel">
+                <div class="carousel-inner text-center">
+                    
+                    <div class="carousel-item active">
+                        <h4 class="text-success fw-bold"><i class="bi bi-code-slash"></i> Lenguajes y Bases de Datos</h4>
+                        <hr class="w-25 mx-auto">
+                        <div class="mt-3">
+                            <span class="skill-badge">Python</span> <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">SQL</span> <span class="skill-badge">VBA</span>
+                            <span class="skill-badge">Java</span> <span class="skill-badge">MySQL</span>
+                            <span class="skill-badge">PostgreSQL</span>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <h4 class="text-success fw-bold"><i class="bi bi-graph-up-arrow"></i> Data & ETL</h4>
+                        <hr class="w-25 mx-auto">
+                        <div class="mt-3">
+                            <span class="skill-badge">Pandas</span> <span class="skill-badge">NumPy</span>
+                            <span class="skill-badge">Scikit-learn</span> <span class="skill-badge">Matplotlib</span>
+                            <span class="skill-badge">BeautifulSoup</span> <span class="skill-badge">Requests</span>
+                            <span class="skill-badge">Openpyxl</span>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <h4 class="text-success fw-bold"><i class="bi bi-eye"></i> ML / CV / IA</h4>
+                        <hr class="w-25 mx-auto">
+                        <div class="mt-3">
+                            <span class="skill-badge">TensorFlow</span> <span class="skill-badge">PyTorch</span>
+                            <span class="skill-badge">OpenCV</span> <span class="skill-badge">Scikit-learn</span>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <h4 class="text-success fw-bold"><i class="bi bi-cloud-check"></i> Frameworks, Web & Cloud</h4>
+                        <hr class="w-25 mx-auto">
+                        <div class="mt-3">
+                            <span class="skill-badge">Django</span> <span class="skill-badge">React</span>
+                            <span class="skill-badge">Spring Boot</span> <span class="skill-badge">TypeScript</span>
+                            <span class="skill-badge">Docker</span> <span class="skill-badge">AWS</span>
+                            <span class="skill-badge">Azure</span> <span class="skill-badge">Power BI</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#skillsCarousel" data-bs-slide="prev" style="filter: invert(1);">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#skillsCarousel" data-bs-slide="next" style="filter: invert(1);">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Seccion Proyectos -->
+        <div class="my-5 pt-4">
+            <h3 class="text-center section-title">Experiencia y Proyectos Relevantes</h3>
+            <div class="row g-4">
+                
+                <!-- Experiencia COFACE -->
+                <div class="col-md-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-people text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Becario Analista de datos / Auxiliar de automatizacion - COFACE</h5>
+                                <p class="text-muted small">Limpieza, transformación y análisis de datos con Python, optimización de flujos y KPIs, dashboards con Power BI.</p>
+                                <p class="text-muted small">Automatización de procesos y creación de flujos mediante VBA, Power Automate, Microsoft Access y Excel avanzado</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Experiencia Profesional</h6>
+                                <p class="small">Limpieza de datos con Pandas y creación de dashboards interactivos.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span> 
+                                    <span class="tech-stack-badge">Pandas</span> 
+                                    <span class="tech-stack-badge">Numpy</span> 
+                                    <span class="tech-stack-badge">Power BI</span> 
+                                    <span class="tech-stack-badge">VBA</span> 
+                                    <span class="tech-stack-badge">Power Automate</span>
+                                    <span class="tech-stack-badge">Microsoft Access</span>
+                                </div>
+                                <span class="badge bg-light text-success">Abr 2024 - Oct 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Proyecto mercaneto Mexico-->
+                <div class="col-md-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-shop text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Mercanteo México (ERP)</h5>
+                                <p class="text-muted small">Gestión con IA y Visión por Computadora. Plataforma web y aplicación Android.  Desarrollado originalmente como proyecto de titulación
+                                actualmente entorno de pruebas (sandbox).
+                                </p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Detalles Técnicos</h6>
+                                <p class="small">Búsqueda por similitud con <b>embeddings y KNN</b>. Microservicios con Django/React.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Django</span> 
+                                    <span class="tech-stack-badge">React</span> 
+                                    <span class="tech-stack-badge">Redis</span> 
+                                    <span class="tech-stack-badge">OpenCV</span>
+                                    <span class="tech-stack-badge">Android</span>
+                                </div>
+                                <a href="https://mercanteomexico.com/" target="_blank" class="btn btn-sm btn-light fw-bold">Ir al sitio</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Proyecto Pipeline ETL -->
+                <div class="col-md-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-database-fill-gear text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Pipeline ETL * MySQL * Web Scrapíng</h5>
+                                <p class="text-muted small">Automatización de extracción y limpieza de datos como practicas.</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Enfoque en Data</h6>
+                                <p class="small">Scripts para BD relacionales, transformación de datos y carga automatizada con Python.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span> 
+                                    <span class="tech-stack-badge">MySQL</span> 
+                                    <span class="tech-stack-badge">Pandas</span>
+                                    <span class="tech-stack-badge">Requests</span>
+                                    <span class="tech-stack-badge">BeautifulSoup</span>
+                                    <span class="tech-stack-badge">Openpyxl</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seccion Habilidades Blandas -->
+        <div class="my-5 pt-4">
+            <h3 class="text-center section-title">Habilidades Blandas</h3>
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="soft-skills-list">
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-people text-success"></i> Trabajo en equipo y colaboración
+                                </li>
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-patch-question text-success"></i> Resolución de problemas y pensamiento analítico
+                                </li>
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-chat-dots text-success"></i> Comunicación efectiva y clara
+                                </li>
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-calendar-check text-success"></i> Organización y gestión del tiempo
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="soft-skills-list">
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-rocket-takeoff text-success"></i> Aprendizaje autónomo y mejora continua
+                                </li>
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-cpu text-success"></i> Adaptabilidad a nuevas tecnologías
+                                </li>
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-check2-square text-success"></i> Responsabilidad y cumplimiento de objetivos
+                                </li>
+                                <li class="soft-skill-item">
+                                    <i class="bi bi-graph-up-arrow text-success"></i> Curiosidad y mentalidad de crecimiento
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seccion estudios -->
+        <div class="row my-5 pt-4">
+            <div class="col-md-8">
+                <h3 class="section-title text-md-start">Educación</h3>
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-mortarboard text-success display-6 me-3"></i>
+                        <div>
+                            <h5 class="fw-bold mb-0">Ingeniería en Sistemas Computacionales</h5>
+                            <p class="text-muted mb-0">Escuela Superior de Cómputo (ESCOM-IPN) | 2021 - 2026</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-book text-success display-6 me-3"></i>
+                        <div>
+                            <h5 class="fw-bold mb-0">Técnico en Informática</h5>
+                            <p class="text-muted mb-0">CECYT N.5 Benito Juárez García (IPN) | 2018 - 2021</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3 class="section-title text-md-start">Idiomas</h3>
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-center text-center">
+                    <div class="mb-3">
+                        <h6 class="fw-bold">Español</h6>
+                        <p class="text-muted">Nativo</p>
+                    </div>
+                    <hr class="w-50 mx-auto">
+                    <div>
+                        <h6 class="fw-bold">Inglés</h6>
+                        <p class="text-muted mb-0">Nivel B1 (En formación)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Seccion Contacto -->
+        <section class="my-5 pt-5">
+            <h3 class="text-center section-title">¿Te gusto mi perfil?, Contactame</h3>
+            <div class="row justify-content-center text-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card border-0 shadow-sm p-4">
+                        <p class="mb-4 text-muted">Abierto a oportunidades como <strong>Data Engineer jr o Software Engineer</strong>.</p>
+                        <div class="d-grid gap-3">
+                            <a href="https://wa.me/5215535707489?text=Hola%20Diego,%20vi%20tu%20portafolio%20y%20me%20gustaría%20platicar%20contigo." 
+                                target="_blank" 
+                                class="btn btn-success btn-lg shadow-sm">
+                                <i class="bi bi-whatsapp"></i> Contactame por WhatsApp
+                            </a>
+                            <div class="mt-3">
+                                <p class="mb-1 fw-bold">dceron1706g@gmail.com</p>
+                                <p class="mb-0 text-muted">CDMX, Azcapotzalco</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>    
+    
+    <!-- Footer -->
+    <footer class="text-center py-4 bg-white border-top mt-5">
+        <small class="text-muted">© 2026 Diego García Ceron - ESCOM-IPN | 55 3570 7489 | www.linkedin.com/in/dceron1706 | dceron1706g@gmail.com</small>
+    </footer>
+
+    <button class="btn btn-dark theme-switch shadow" onclick="toggleTheme()" id="themeBtn"><i class="bi bi-moon-stars-fill"></i></button>
+
+    <!-- Scripts cambio de tema -->
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            if (html.getAttribute('data-bs-theme') === 'dark') {
+                html.setAttribute('data-bs-theme', 'light');
+                btn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+                btn.className = 'btn btn-dark theme-switch shadow';
+            } else {
+                html.setAttribute('data-bs-theme', 'dark');
+                btn.innerHTML = '<i class="bi bi-sun-fill"></i>';
+                btn.className = 'btn btn-light theme-switch shadow';
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>
