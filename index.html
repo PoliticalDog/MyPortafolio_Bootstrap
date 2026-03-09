@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<!-- Head -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diego García Ceron | Portafolio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <!-- Styles -->
+
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; transition: background-color 0.3s; }
-        
-        /* Header y perfil */
+
         .profile-header-bg {
             height: 300px;
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/banner.webp'); 
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('src/banner.webp');
             background-size: cover; background-position: center 30%; background-repeat: no-repeat;
+            animation: headerFadeIn 0.8s ease forwards;
         }
-        .profile-card { 
-            background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-top: -80px; overflow: hidden; border: none;
-        }
-        .profile-body { padding: 40px; }
-        .img-profile { 
-            border: 6px solid #28a745; width: 180px; height: 180px; 
-            object-fit: cover; background: white;
+        @keyframes headerFadeIn {
+            from { opacity: 0; transform: translateY(-12px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        
-        /* Seccion titulos */
+        .profile-card {
+            background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-top: -80px; overflow: hidden; border: none;
+            animation: cardSlideUp 0.7s ease 0.3s both;
+        }
+        @keyframes cardSlideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-body { padding: 40px; }
+
+        .img-profile {
+            border: 6px solid #28a745; width: 180px; height: 180px;
+            object-fit: cover; background: white;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .img-profile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 28px rgba(40, 167, 69, 0.35) !important;
+        }
+
         .section-title {
             font-weight: 700; color: #212529; margin-bottom: 35px;
             text-transform: uppercase; letter-spacing: 1px; position: relative;
@@ -40,15 +52,21 @@
             background: #28a745; margin: 10px auto;
         }
 
-        /* Carrusel habilidades tecnicas  */
         .carousel-item { padding: 30px; min-height: 280px; }
-        .skill-badge { 
-            font-size: 0.9rem; padding: 8px 15px; margin: 4px; 
+        .skill-badge {
+            font-size: 0.9rem; padding: 8px 15px; margin: 4px;
             background-color: #f1f3f5; color: #2c3e50; border-radius: 50px;
             display: inline-block; border: 1px solid #dee2e6;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+            cursor: default;
+        }
+        .skill-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.2);
+            background-color: #e8f5e9;
+            border-color: #28a745;
         }
 
-        /* Cards Proyectos */
         .flip-card { background-color: transparent; height: 320px; perspective: 1000px; }
         .flip-card-inner {
             position: relative; width: 100%; height: 100%; text-align: center;
@@ -62,9 +80,9 @@
             justify-content: center; align-items: center; padding: 25px;
         }
         .flip-card-front { background-color: #ffffff; color: black; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .flip-card-back { 
-            background-color: #28a745; color: white; transform: rotateY(180deg); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        .flip-card-back {
+            background-color: #28a745; color: white; transform: rotateY(180deg);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         .tech-stack-badge {
             background: rgba(255,255,255,0.2); font-size: 0.75rem;
@@ -72,62 +90,92 @@
             border: 1px solid rgba(255,255,255,0.4);
         }
 
-            /* Card para habilidades blandas */
-        .soft-skills-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .flip-hint {
+            position: absolute; bottom: 12px; right: 14px;
+            font-size: 0.7rem; color: #adb5bd;
+            display: flex; align-items: center; gap: 4px;
+            transition: opacity 0.3s;
+        }
+        .flip-card:hover .flip-hint { opacity: 0; }
+
+        .projects-group-label {
+            font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+            color: #adb5bd; font-weight: 600; text-align: center;
+            margin-top: 3rem; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .projects-group-label::before,
+        .projects-group-label::after {
+            content: ''; flex: 1; height: 1px; background: #dee2e6;
         }
 
+        .soft-skills-list { list-style: none; padding: 0; margin: 0; }
         .soft-skill-item {
-            padding: 12px 0;
-            font-size: 1.05rem;
-            color: #495057;
-            display: flex;
-            align-items: center;
+            padding: 12px 0; font-size: 1.05rem; color: #495057;
+            display: flex; align-items: center;
             border-bottom: 1px solid #f1f3f5;
+            transition: color 0.2s ease, padding-left 0.2s ease;
         }
+        .soft-skill-item:last-child { border-bottom: none; }
+        .soft-skill-item:hover { color: #28a745; padding-left: 6px; }
+        .soft-skill-item i { font-size: 1.2rem; margin-right: 15px; width: 25px; text-align: center; }
+        [data-bs-theme="dark"] .soft-skill-item { color: #dee2e6; border-bottom-color: #3d4246; }
+        [data-bs-theme="dark"] .soft-skill-item:hover { color: #28a745; }
 
-        .soft-skill-item:last-child {
-            border-bottom: none;
-        }
+        .card-hover { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1) !important; }
 
-        .soft-skill-item i {
-            font-size: 1.2rem;
-            margin-right: 15px;
-            width: 25px; /* Alineación perfecta de los iconos */
-            text-align: center;
-        }
+        .btn { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .btn:hover { transform: translateY(-2px); }
 
-        [data-bs-theme="dark"] .soft-skill-item {
-            color: #dee2e6;
-            border-bottom-color: #3d4246;
-        }
-
-        /* Temas responsivos */
         .theme-switch {
             position: fixed; bottom: 20px; right: 20px; z-index: 1000;
             border-radius: 50%; width: 50px; height: 50px; display: flex;
             align-items: center; justify-content: center;
+            transition: transform 0.2s ease;
         }
+        .theme-switch:hover { transform: scale(1.1) rotate(20deg); }
+
         [data-bs-theme="dark"] .profile-card, [data-bs-theme="dark"] .card, [data-bs-theme="dark"] .flip-card-front {
             background-color: #2b3035 !important; color: #f8f9fa;
         }
+        [data-bs-theme="dark"] .skill-badge:hover { background-color: #2d4a31; }
+        [data-bs-theme="dark"] .projects-group-label { color: #6c757d; }
+        [data-bs-theme="dark"] .projects-group-label::before,
+        [data-bs-theme="dark"] .projects-group-label::after { background: #3d4246; }
+
         @media (max-width: 768px) {
             .profile-body { padding: 20px; }
             .img-profile { width: 150px; height: 150px; }
-            .flip-card { height: 350px; } 
+            .flip-card { height: 350px; }
         }
+
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .reveal-child {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .reveal-child.visible { opacity: 1; transform: translateY(0); }
+
+        .delay-1 { transition-delay: 0.12s; }
+        .delay-2 { transition-delay: 0.24s; }
+        .delay-3 { transition-delay: 0.36s; }
+        .delay-4 { transition-delay: 0.48s; }
     </style>
 </head>
 
-<!-- Body -->
 <body data-bs-theme="light">
-    <!-- contendor de banner -->
+
     <div class="profile-header-bg"></div>
 
-    <!-- Contenedor acerca de mi -->
     <div class="container">
+
+        <!-- Acerca de mí -->
         <div class="profile-card shadow">
             <div class="profile-body">
                 <div class="row align-items-center text-center text-md-start">
@@ -138,11 +186,12 @@
                         <h1 class="display-5 fw-bold mb-1">Diego García Ceron</h1>
                         <p class="lead text-success fw-bold mb-2">Ingeniero en Sistemas Computacionales | ESCOM-IPN</p>
                         <p class="text-muted mb-3">
-                            Recién egresado con experiencia en <strong>análisis de datos, automatización y desarrollo de software</strong>. 
-                            Especializado en Python para soluciones de <strong>Machine Learning, Visión por Computadora e IA</strong>.
-                            <br>
-                                <br>Busco una oportunidad para potenciar mi perfil como <strong>Software Engineer, con enfoque en Data, Machine Learning o IA.</strong></p><br>
-                            </br>
+                            Ingeniero en Sistemas Computacionales (ESCOM-IPN) recién egresado, especializado en el <strong>ciclo de vida del dato</strong>.
+                            Con experiencia técnica en la construcción de <strong>pipelines de extracción automatizada (web scraping)</strong>,
+                            procesamiento <strong>ETL</strong> y <strong>gestión de bases de datos</strong>. He desarrollado y desplegado soluciones reales incluyendo e-commerce.
+                            <br><br>
+                            Actualmente profundizo de manera autodidacta en herramientas de <strong>Big Data</strong> y servicios de nube como <strong>AWS y GCP</strong>,
+                            con el objetivo de mejorar la arquitectura y calidad de mis flujos de datos.
                         </p>
                         <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-2 mt-4">
                             <a href="src/CV_GarciaCeronDiego.pdf" download class="btn btn-success shadow-sm"><i class="bi bi-file-earmark-pdf"></i> Descargar CV</a>
@@ -154,56 +203,68 @@
             </div>
         </div>
 
-        <!-- Seccion Habilidades técnicas -->
-       <div class="mt-5 pt-4">
+        <!-- Habilidades Técnicas -->
+        <div class="mt-5 pt-4 reveal">
             <h3 class="text-center section-title">Habilidades Técnicas</h3>
             <div id="skillsCarousel" class="carousel slide bg-white shadow-sm rounded-4" data-bs-ride="carousel">
                 <div class="carousel-inner text-center">
-                    
                     <div class="carousel-item active">
-                        <h4 class="text-success fw-bold"><i class="bi bi-code-slash"></i> Lenguajes y Bases de Datos</h4>
+                        <h4 class="text-success fw-bold"><i class="bi bi-code-slash"></i> Lenguajes</h4>
                         <hr class="w-25 mx-auto">
                         <div class="mt-3">
-                            <span class="skill-badge">Python</span> <span class="skill-badge">JavaScript</span>
-                            <span class="skill-badge">SQL</span> <span class="skill-badge">VBA</span>
-                            <span class="skill-badge">Java</span> <span class="skill-badge">MySQL</span>
-                            <span class="skill-badge">PostgreSQL</span>
+                            <span class="skill-badge">Python</span><span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">SQL</span><span class="skill-badge">VBA</span>
+                            <span class="skill-badge">Java</span><span class="skill-badge">TypeScript</span>
+                            <span class="skill-badge">HTML5</span><span class="skill-badge">CSS</span>
                         </div>
                     </div>
-
                     <div class="carousel-item">
-                        <h4 class="text-success fw-bold"><i class="bi bi-graph-up-arrow"></i> Data & ETL</h4>
+                        <h4 class="text-success fw-bold"><i class="bi bi-database"></i> Bases de Datos</h4>
                         <hr class="w-25 mx-auto">
                         <div class="mt-3">
-                            <span class="skill-badge">Pandas</span> <span class="skill-badge">NumPy</span>
-                            <span class="skill-badge">Scikit-learn</span> <span class="skill-badge">Matplotlib</span>
-                            <span class="skill-badge">BeautifulSoup</span> <span class="skill-badge">Requests</span>
+                            <span class="skill-badge">MySQL</span><span class="skill-badge">PostgreSQL</span>
+                            <span class="skill-badge">MongoDB</span><span class="skill-badge">BigQuery</span>
+                            <span class="skill-badge">Microsoft Access</span>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <h4 class="text-success fw-bold"><i class="bi bi-graph-up-arrow"></i> Data & ETL / Orquestación</h4>
+                        <hr class="w-25 mx-auto">
+                        <div class="mt-3">
+                            <span class="skill-badge">Pandas</span><span class="skill-badge">NumPy</span>
+                            <span class="skill-badge">Apache Airflow</span><span class="skill-badge">dbt</span>
+                            <span class="skill-badge">Scikit-learn</span><span class="skill-badge">Matplotlib</span>
+                            <span class="skill-badge">BeautifulSoup</span><span class="skill-badge">Requests</span>
                             <span class="skill-badge">Openpyxl</span>
                         </div>
                     </div>
-
                     <div class="carousel-item">
                         <h4 class="text-success fw-bold"><i class="bi bi-eye"></i> ML / CV / IA</h4>
                         <hr class="w-25 mx-auto">
                         <div class="mt-3">
-                            <span class="skill-badge">TensorFlow</span> <span class="skill-badge">PyTorch</span>
-                            <span class="skill-badge">OpenCV</span> <span class="skill-badge">Scikit-learn</span>
+                            <span class="skill-badge">TensorFlow</span><span class="skill-badge">PyTorch</span>
+                            <span class="skill-badge">OpenCV</span><span class="skill-badge">Scikit-learn</span>
                         </div>
                     </div>
-
                     <div class="carousel-item">
-                        <h4 class="text-success fw-bold"><i class="bi bi-cloud-check"></i> Frameworks, Web & Cloud</h4>
+                        <h4 class="text-success fw-bold"><i class="bi bi-layout-text-window"></i> Frameworks & Web</h4>
                         <hr class="w-25 mx-auto">
                         <div class="mt-3">
-                            <span class="skill-badge">Django</span> <span class="skill-badge">React</span>
-                            <span class="skill-badge">Spring Boot</span> <span class="skill-badge">TypeScript</span>
-                            <span class="skill-badge">Docker</span> <span class="skill-badge">AWS</span>
-                            <span class="skill-badge">Azure</span> <span class="skill-badge">Power BI</span>
+                            <span class="skill-badge">Django</span><span class="skill-badge">Flask</span>
+                            <span class="skill-badge">React</span><span class="skill-badge">Spring Boot</span>
                         </div>
                     </div>
-
+                    <div class="carousel-item">
+                        <h4 class="text-success fw-bold"><i class="bi bi-tools"></i> Herramientas & Cloud</h4>
+                        <hr class="w-25 mx-auto">
+                        <div class="mt-3">
+                            <span class="skill-badge">Docker</span><span class="skill-badge">AWS</span>
+                            <span class="skill-badge">Azure</span><span class="skill-badge">Google Cloud</span>
+                            <span class="skill-badge">Power BI</span><span class="skill-badge">Postman</span>
+                            <span class="skill-badge">Jupyter/Colab</span><span class="skill-badge">pgAdmin</span>
+                        </div>
+                    </div>
                 </div>
-
                 <button class="carousel-control-prev" type="button" data-bs-target="#skillsCarousel" data-bs-slide="prev" style="filter: invert(1);">
                     <span class="carousel-control-prev-icon"></span>
                 </button>
@@ -213,31 +274,29 @@
             </div>
         </div>
 
-        <!-- Seccion Proyectos -->
-        <div class="my-5 pt-4">
+        <!-- ===== PROYECTOS ===== -->
+        <div class="my-5 pt-4 reveal">
             <h3 class="text-center section-title">Experiencia y Proyectos Relevantes</h3>
+
+            <!-- Grupo 1: Experiencia profesional -->
             <div class="row g-4">
-                
-                <!-- Experiencia COFACE -->
-                <div class="col-md-4">
+                <div class="col-md-4 reveal-child delay-1">
                     <div class="flip-card">
                         <div class="flip-card-inner shadow-sm">
                             <div class="flip-card-front">
                                 <i class="bi bi-people text-success display-4 mb-3"></i>
-                                <h5 class="fw-bold">Becario Analista de datos / Auxiliar de automatizacion - COFACE</h5>
+                                <h5 class="fw-bold">Becario Analista de datos / Auxiliar de automatización - COFACE</h5>
                                 <p class="text-muted small">Limpieza, transformación y análisis de datos con Python, optimización de flujos y KPIs, dashboards con Power BI.</p>
-                                <p class="text-muted small">Automatización de procesos y creación de flujos mediante VBA, Power Automate, Microsoft Access y Excel avanzado</p>
+                                <p class="text-muted small">Automatización de procesos mediante VBA, Power Automate, Microsoft Access y Excel avanzado.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
                             </div>
                             <div class="flip-card-back">
                                 <h6 class="fw-bold">Experiencia Profesional</h6>
                                 <p class="small">Limpieza de datos con Pandas y creación de dashboards interactivos.</p>
                                 <div class="d-flex flex-wrap justify-content-center mb-3">
-                                    <span class="tech-stack-badge">Python</span> 
-                                    <span class="tech-stack-badge">Pandas</span> 
-                                    <span class="tech-stack-badge">Numpy</span> 
-                                    <span class="tech-stack-badge">Power BI</span> 
-                                    <span class="tech-stack-badge">VBA</span> 
-                                    <span class="tech-stack-badge">Power Automate</span>
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">Pandas</span>
+                                    <span class="tech-stack-badge">NumPy</span><span class="tech-stack-badge">Power BI</span>
+                                    <span class="tech-stack-badge">VBA</span><span class="tech-stack-badge">Power Automate</span>
                                     <span class="tech-stack-badge">Microsoft Access</span>
                                 </div>
                                 <span class="badge bg-light text-success">Abr 2024 - Oct 2025</span>
@@ -245,25 +304,22 @@
                         </div>
                     </div>
                 </div>
-                <!-- Proyecto mercaneto Mexico-->
-                <div class="col-md-4">
+
+                <div class="col-md-4 reveal-child delay-2">
                     <div class="flip-card">
                         <div class="flip-card-inner shadow-sm">
                             <div class="flip-card-front">
                                 <i class="bi bi-shop text-success display-4 mb-3"></i>
                                 <h5 class="fw-bold">Mercanteo México (ERP)</h5>
-                                <p class="text-muted small">Gestión con IA y Visión por Computadora. Plataforma web y aplicación Android.  Desarrollado originalmente como proyecto de titulación
-                                actualmente entorno de pruebas (sandbox).
-                                </p>
+                                <p class="text-muted small">Gestión con IA y Visión por Computadora. Plataforma web y aplicación Android. Proyecto de titulación, actualmente en entorno sandbox.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
                             </div>
                             <div class="flip-card-back">
                                 <h6 class="fw-bold">Detalles Técnicos</h6>
-                                <p class="small">Búsqueda por similitud con <b>embeddings y KNN</b>. Microservicios con Django/React.</p>
+                                <p class="small">Búsqueda por similitud con <b>embeddings y KNN</b>. Microservicios con Django/React. APIs REST/SOAP.</p>
                                 <div class="d-flex flex-wrap justify-content-center mb-3">
-                                    <span class="tech-stack-badge">Django</span> 
-                                    <span class="tech-stack-badge">React</span> 
-                                    <span class="tech-stack-badge">Redis</span> 
-                                    <span class="tech-stack-badge">OpenCV</span>
+                                    <span class="tech-stack-badge">Django</span><span class="tech-stack-badge">React</span>
+                                    <span class="tech-stack-badge">Redis</span><span class="tech-stack-badge">OpenCV</span>
                                     <span class="tech-stack-badge">Android</span>
                                 </div>
                                 <a href="https://mercanteomexico.com/" target="_blank" class="btn btn-sm btn-light fw-bold">Ir al sitio</a>
@@ -271,26 +327,23 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Proyecto Pipeline ETL -->
-                <div class="col-md-4">
+
+                <div class="col-md-4 reveal-child delay-3">
                     <div class="flip-card">
                         <div class="flip-card-inner shadow-sm">
                             <div class="flip-card-front">
                                 <i class="bi bi-database-fill-gear text-success display-4 mb-3"></i>
-                                <h5 class="fw-bold">Pipeline ETL * MySQL * Web Scrapíng</h5>
-                                <p class="text-muted small">Automatización de extracción y limpieza de datos como practicas.</p>
+                                <h5 class="fw-bold">Pipeline ETL · MySQL · Web Scraping</h5>
+                                <p class="text-muted small">Automatización de extracción y limpieza de datos. Scripts para BDs relacionales y carga automatizada con Python.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
                             </div>
                             <div class="flip-card-back">
                                 <h6 class="fw-bold">Enfoque en Data</h6>
                                 <p class="small">Scripts para BD relacionales, transformación de datos y carga automatizada con Python.</p>
                                 <div class="d-flex flex-wrap justify-content-center mb-3">
-                                    <span class="tech-stack-badge">Python</span> 
-                                    <span class="tech-stack-badge">MySQL</span> 
-                                    <span class="tech-stack-badge">Pandas</span>
-                                    <span class="tech-stack-badge">Requests</span>
-                                    <span class="tech-stack-badge">BeautifulSoup</span>
-                                    <span class="tech-stack-badge">Openpyxl</span>
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">MySQL</span>
+                                    <span class="tech-stack-badge">Pandas</span><span class="tech-stack-badge">Requests</span>
+                                    <span class="tech-stack-badge">BeautifulSoup</span><span class="tech-stack-badge">Openpyxl</span>
                                 </div>
                                 <a href="https://github.com/PoliticalDog" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
                             </div>
@@ -298,44 +351,195 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Seccion Habilidades Blandas -->
-        <div class="my-5 pt-4">
+            <!-- Grupo 2: Proyectos de portafolio + académicos -->
+            <div class="projects-group-label">Proyectos Destacados de Portafolio</div>
+            <div class="row g-4">
+                <div class="col-md-4 reveal-child delay-1">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-cloud-rain text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Weather ETL Pipeline</h5>
+                                <p class="text-muted small">Pipeline automatizado de extracción desde APIs climáticas(Open-Meteo API) y carga en PostgreSQL, orquestado con Apache Airflow y monitorizado con pgadmin.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Detalles Técnicos</h6>
+                                <p class="small">Extracción, transformación y carga automatizada. Monitoreo y gestión con pgAdmin.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">Apache Airflow</span>
+                                    <span class="tech-stack-badge">PostgreSQL</span><span class="tech-stack-badge">pgAdmin</span>
+                                    <span class="tech-stack-badge">APIs REST</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/weather-etl-pipeline" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 reveal-child delay-2">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-plug text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">ETL & REST API</h5>
+                                <p class="text-muted small">Pipeline ETL sobre un DataFrame con carga a MySQL en Docker, más una API REST con Flask que expone endpoints para extracción, validación y reseteo de datos estructurados.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Detalles Técnicos</h6>
+                                <p class="small">Flujo ETL con carga a base de datos MySQL contenerizada con Docker. API REST con Flask que incluye endpoints POST /extract con validación de rangos, GET /missing para calcular el número faltante con fórmula s=n(n+1)/2, y POST /reset para reinicio del estado.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">Flask</span>
+                                    <span class="tech-stack-badge">Pandas</span><span class="tech-stack-badge">REST API</span>
+                                    <span class="tech-stack-badge">Postman</span><span class="tech-stack-badge">Docker</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/python-etl-rest-api" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 reveal-child delay-3">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-music-note-beamed text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Spotify Data Warehouse</h5>
+                                <p class="text-muted small">Pipeline de datos con Python y dbt para modelado dimensional y almacenamiento en Google BigQuery.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Detalles Técnicos</h6>
+                                <p class="small">Modelado con dbt, carga en BigQuery y consultas analíticas sobre datos de Spotify.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">dbt</span>
+                                    <span class="tech-stack-badge">BigQuery</span><span class="tech-stack-badge">Google Cloud</span>
+                                    <span class="tech-stack-badge">SQL</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/spotify-dw-dbt" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Académicos ESCOM dentro del mismo grupo -->
+                <div class="col-md-3 reveal-child delay-1">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-robot text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Prácticas ML · ESCOM</h5>
+                                <p class="text-muted small">Colección de prácticas en Machine Learning: KNN, K-Means, SVD, clasificación y visualización de datos.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Contenido</h6>
+                                <p class="small">Ejercicios organizados por parcial, implementados en Python con enfoque en algoritmos clásicos de ML.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">NumPy</span>
+                                    <span class="tech-stack-badge">Matplotlib</span><span class="tech-stack-badge">KNN</span>
+                                    <span class="tech-stack-badge">K-Means</span><span class="tech-stack-badge">SVD</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/Practicas_ML_ESCOM" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 reveal-child delay-2">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-trash3 text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Clasificador de Basura</h5>
+                                <p class="text-muted small">Identificador de residuos mediante Visión por Computadora. Fusión y mejora mediante un clasificador por equipo.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Detalles Técnicos</h6>
+                                <p class="small">Reentrenamiento de MobileResNet (transfer learning) adaptado a un dataset personalizado de residuos. Clasificación secundaria con KNN para categorización por similitud.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">OpenCV</span>
+                                    <span class="tech-stack-badge">MobileResNet</span><span class="tech-stack-badge">Clasificación</span>
+                                    <span class="tech-stack-badge">CNN</span><span class="tech-stack-badge">KNN</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/Clasificador_basura_2" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 reveal-child delay-3">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-camera2 text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Computer Vision & PDI</h5>
+                                <p class="text-muted small">Prácticas de Procesamiento Digital de Imágenes: histogramas, morfología, FFT, DCT, ruido y filtrado espacial/frecuencial.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Técnicas implementadas</h6>
+                                <p class="small">Interfaz gráfica unificada con módulos: binarización, morfología, FFT, Butterworth y DCT.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">OpenCV</span>
+                                    <span class="tech-stack-badge">NumPy</span><span class="tech-stack-badge">SciPy</span>
+                                    <span class="tech-stack-badge">FFT / DCT</span><span class="tech-stack-badge">Matplotlib</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/Fundamentals-and-Applications-of-Computer-Vision" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 reveal-child delay-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner shadow-sm">
+                            <div class="flip-card-front">
+                                <i class="bi bi-diagram-3 text-success display-4 mb-3"></i>
+                                <h5 class="fw-bold">Prácticas IA · ESCOM</h5>
+                                <p class="text-muted small">Algoritmos BFS, DFS, Dijkstra y A* en laberintos. Agentes, lógica de primer orden y regresión lineal.</p>
+                                <span class="flip-hint"><i class="bi bi-arrow-repeat"></i> Hover para ver detalles</span>
+                            </div>
+                            <div class="flip-card-back">
+                                <h6 class="fw-bold">Contenido</h6>
+                                <p class="small">3 parciales con algoritmos clásicos de IA, comparativa gráfica de agentes, lógica y regresión 3D.</p>
+                                <div class="d-flex flex-wrap justify-content-center mb-3">
+                                    <span class="tech-stack-badge">Python</span><span class="tech-stack-badge">BFS / DFS</span>
+                                    <span class="tech-stack-badge">A*</span><span class="tech-stack-badge">Dijkstra</span>
+                                    <span class="tech-stack-badge">Matplotlib</span><span class="tech-stack-badge">NumPy</span>
+                                </div>
+                                <a href="https://github.com/PoliticalDog/Practicas_IA_ESCOM" target="_blank" class="btn btn-sm btn-light fw-bold">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- fin #proyectos -->
+
+        <!-- Habilidades Blandas -->
+        <div class="my-5 pt-4 reveal">
             <h3 class="text-center section-title">Habilidades Blandas</h3>
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden card-hover">
                 <div class="card-body p-4 p-md-5">
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="soft-skills-list">
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-people text-success"></i> Trabajo en equipo y colaboración
-                                </li>
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-patch-question text-success"></i> Resolución de problemas y pensamiento analítico
-                                </li>
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-chat-dots text-success"></i> Comunicación efectiva y clara
-                                </li>
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-calendar-check text-success"></i> Organización y gestión del tiempo
-                                </li>
+                                <li class="soft-skill-item"><i class="bi bi-people text-success"></i> Trabajo en equipo y colaboración</li>
+                                <li class="soft-skill-item"><i class="bi bi-patch-question text-success"></i> Resolución de problemas y pensamiento analítico</li>
+                                <li class="soft-skill-item"><i class="bi bi-chat-dots text-success"></i> Comunicación efectiva y clara</li>
+                                <li class="soft-skill-item"><i class="bi bi-calendar-check text-success"></i> Organización y gestión del tiempo</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <ul class="soft-skills-list">
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-rocket-takeoff text-success"></i> Aprendizaje autónomo y mejora continua
-                                </li>
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-cpu text-success"></i> Adaptabilidad a nuevas tecnologías
-                                </li>
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-check2-square text-success"></i> Responsabilidad y cumplimiento de objetivos
-                                </li>
-                                <li class="soft-skill-item">
-                                    <i class="bi bi-graph-up-arrow text-success"></i> Curiosidad y mentalidad de crecimiento
-                                </li>
+                                <li class="soft-skill-item"><i class="bi bi-rocket-takeoff text-success"></i> Aprendizaje autónomo y mejora continua</li>
+                                <li class="soft-skill-item"><i class="bi bi-cpu text-success"></i> Adaptabilidad a nuevas tecnologías</li>
+                                <li class="soft-skill-item"><i class="bi bi-check2-square text-success"></i> Responsabilidad y cumplimiento de objetivos</li>
+                                <li class="soft-skill-item"><i class="bi bi-graph-up-arrow text-success"></i> Curiosidad y mentalidad de crecimiento</li>
                             </ul>
                         </div>
                     </div>
@@ -343,11 +547,11 @@
             </div>
         </div>
 
-        <!-- Seccion estudios -->
-        <div class="row my-5 pt-4">
+        <!-- Educación + Idiomas -->
+        <div class="row my-5 pt-4 reveal">
             <div class="col-md-8">
                 <h3 class="section-title text-md-start">Educación</h3>
-                <div class="card border-0 shadow-sm rounded-4 p-4 mb-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-3 card-hover reveal-child delay-1">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-mortarboard text-success display-6 me-3"></i>
                         <div>
@@ -356,7 +560,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card border-0 shadow-sm rounded-4 p-4">
+                <div class="card border-0 shadow-sm rounded-4 p-4 card-hover reveal-child delay-2">
                     <div class="d-flex align-items-center">
                         <i class="bi bi-book text-success display-6 me-3"></i>
                         <div>
@@ -366,9 +570,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 reveal-child delay-2">
                 <h3 class="section-title text-md-start">Idiomas</h3>
-                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-center text-center">
+                <div class="card border-0 shadow-sm rounded-4 p-4 h-100 d-flex flex-column justify-content-center text-center card-hover">
                     <div class="mb-3">
                         <h6 class="fw-bold">Español</h6>
                         <p class="text-muted">Nativo</p>
@@ -382,19 +586,17 @@
             </div>
         </div>
 
-
-        <!-- Seccion Contacto -->
-        <section class="my-5 pt-5">
-            <h3 class="text-center section-title">¿Te gusto mi perfil?, Contactame</h3>
+        <!-- Contacto -->
+        <section class="my-5 pt-5 reveal">
+            <h3 class="text-center section-title">¿Te gustó mi perfil? Contáctame</h3>
             <div class="row justify-content-center text-center">
                 <div class="col-md-8 col-lg-6">
-                    <div class="card border-0 shadow-sm p-4">
-                        <p class="mb-4 text-muted">Abierto a oportunidades como <strong>Data Engineer jr o Software Engineer</strong>.</p>
+                    <div class="card border-0 shadow-sm p-4 card-hover">
+                        <p class="mb-4 text-muted">Abierto a oportunidades como <strong>Data Engineer Jr o Software Engineer</strong>.</p>
                         <div class="d-grid gap-3">
-                            <a href="https://wa.me/5215535707489?text=Hola%20Diego,%20vi%20tu%20portafolio%20y%20me%20gustaría%20platicar%20contigo." 
-                                target="_blank" 
-                                class="btn btn-success btn-lg shadow-sm">
-                                <i class="bi bi-whatsapp"></i> Contactame por WhatsApp
+                            <a href="https://wa.me/5215535707489?text=Hola%20Diego,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20platicar%20contigo."
+                               target="_blank" class="btn btn-success btn-lg shadow-sm">
+                                <i class="bi bi-whatsapp"></i> Contáctame por WhatsApp
                             </a>
                             <div class="mt-3">
                                 <p class="mb-1 fw-bold">dceron1706g@gmail.com</p>
@@ -405,16 +607,18 @@
                 </div>
             </div>
         </section>
-    </div>    
-    
+
+    </div><!-- fin .container -->
+
     <!-- Footer -->
     <footer class="text-center py-4 bg-white border-top mt-5">
         <small class="text-muted">© 2026 Diego García Ceron - ESCOM-IPN | 55 3570 7489 | www.linkedin.com/in/dceron1706 | dceron1706g@gmail.com</small>
     </footer>
 
-    <button class="btn btn-dark theme-switch shadow" onclick="toggleTheme()" id="themeBtn"><i class="bi bi-moon-stars-fill"></i></button>
+    <button class="btn btn-dark theme-switch shadow" onclick="toggleTheme()" id="themeBtn">
+        <i class="bi bi-moon-stars-fill"></i>
+    </button>
 
-    <!-- Scripts cambio de tema -->
     <script>
         function toggleTheme() {
             const html = document.documentElement;
@@ -429,8 +633,22 @@
                 btn.className = 'btn btn-light theme-switch shadow';
             }
         }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    entry.target.querySelectorAll('.reveal-child').forEach(child => {
+                        child.classList.add('visible');
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
 </body>
 </html>
